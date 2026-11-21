@@ -1,0 +1,185 @@
+/* Vice Heat — editor chrome. The poster itself is drawn on canvas. */
+@font-face {
+  font-family: 'Anton';
+  src: url('fonts/Anton-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pacifico';
+  src: url('fonts/Pacifico-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url('fonts/BebasNeue-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sacramento';
+  src: url('fonts/Sacramento-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+:root {
+  --bg: #14061f;
+  --panel: #221033;
+  --ink: #f5eefc;
+  --muted: #c9a8e0;
+  --pink: #ff4d8d;
+  --gold: #ffd76a;
+  --line: #3d2154;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.5 Arial, Helvetica, sans-serif;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  padding: 16px 24px;
+  border-bottom: 2px solid var(--line);
+}
+.brand h1 {
+  margin: 0;
+  font: 44px/1 'Anton', 'Arial Black', sans-serif;
+  letter-spacing: 2px;
+  background: linear-gradient(180deg, #fff 0%, #ffe9a8 35%, #ff9d5c 55%, #ff4d8d 75%, #b8f1ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.tagline { margin: 4px 0 0; color: var(--muted); max-width: 640px; }
+#status { margin: 0; color: var(--gold); font-size: 13px; text-align: right; }
+
+main {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 20px;
+  padding: 20px 24px 32px;
+  align-items: start;
+}
+#controls section {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+#controls h2 { margin: 0 0 10px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); }
+.btnrow { display: flex; flex-wrap: wrap; gap: 6px; }
+.btnrow button, .actions button {
+  background: #2e1544;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.btnrow button:hover, .actions button:hover { border-color: var(--pink); }
+.btnrow button.on { background: var(--pink); border-color: var(--pink); color: #fff; font-weight: bold; }
+label { display: block; margin: 8px 0; font-size: 13px; color: var(--muted); }
+label input[type="text"], label select {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px;
+  background: #180a26;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 14px;
+}
+label input[type="range"] { display: block; width: 100%; margin-top: 4px; accent-color: var(--pink); }
+.hint { font-size: 12.5px; color: var(--muted); margin: 6px 0; }
+.samples { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+.sample {
+  display: block;
+  background: #180a26;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+}
+.sample img { display: block; width: 100%; height: 74px; object-fit: cover; }
+.sample span { display: block; padding: 5px 7px; font-size: 11.5px; color: var(--ink); }
+.sample .score {
+  display: block;
+  padding: 3px 7px 6px;
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--gold);
+}
+.sample:hover { border-color: var(--pink); }
+.facelab { display: grid; gap: 6px; }
+.facerow {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 4px 8px;
+  background: #180a26;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 12.5px;
+}
+.facerow b { color: var(--gold); }
+.facerow .score { color: #3dff8e; font-weight: bold; white-space: nowrap; }
+.facerow small { grid-column: 1 / -1; color: var(--muted); font-size: 11px; }
+.toolbar button.on { background: #1d5c33; border-color: #3dff8e; color: #d8ffe9; font-weight: bold; }
+.uploadBtn {
+  display: block;
+  text-align: center;
+  background: var(--pink);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 9px;
+  cursor: pointer;
+  margin: 8px 0;
+}
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.actions .primary { background: var(--gold); color: #241026; font-weight: bold; border-color: var(--gold); }
+.fineprint { font-size: 11.5px; color: var(--muted); }
+.toolbar { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.toolbar button {
+  background: #2e1544;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.toolbar button:hover { border-color: var(--pink); }
+.minis { display: flex; gap: 16px; margin-top: 14px; align-items: flex-end; }
+.minis figure { margin: 0; }
+.minis canvas { display: block; border: 2px solid var(--line); border-radius: 4px; background: #000; }
+.minis figcaption { font-size: 11.5px; color: var(--muted); margin-top: 4px; text-align: center; }
+#stage { position: sticky; top: 16px; }
+#poster {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #000;
+  border: 2px solid var(--line);
+  border-radius: 6px;
+  cursor: crosshair;
+}
+
+/* Screenshot mode: the cover alone, edge to edge, no editor chrome. */
+body.shot-cover { background: #000; overflow: hidden; }
+body.shot-cover header,
+body.shot-cover #controls,
+body.shot-cover #stage .hint,
+body.shot-cover .minis { display: none; }
+body.shot-cover main { display: block; padding: 0; }
+body.shot-cover #stage { position: static; }
+body.shot-cover #poster { width: 100vw; height: 100vh; border: 0; border-radius: 0; object-fit: fill; }
